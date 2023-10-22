@@ -1,0 +1,27 @@
+-- Criação de uma tabela de colaboradores com nomes de gerentes
+CREATE TABLE EmployeesWithManagers AS
+SELECT 
+    CONCAT(e.EmployeeFirstName, ' ', e.EmployeeLastName) AS EmployeeName,
+    CONCAT(m.EmployeeFirstName, ' ', m.EmployeeLastName) AS ManagerName
+FROM Employees AS e
+LEFT JOIN Employees AS m ON e.Super_ssn = m.Ssn;
+
+-- Criação de uma tabela de departamentos com localizações
+CREATE TABLE DepartmentLocations AS
+SELECT 
+    CONCAT(d.DepartmentName, ' - ', l.Location) AS DepartmentLocation
+FROM Departments AS d
+JOIN Locations AS l ON d.LocationID = l.LocationID;
+
+-- Criação de uma tabela de contagem de colaboradores por gerente
+CREATE TABLE EmployeesPerManager AS
+SELECT 
+    CONCAT(e.EmployeeFirstName, ' ', e.EmployeeLastName) AS ManagerName,
+    COUNT(*) AS NumberOfEmployees
+FROM Employees AS e
+GROUP BY e.EmployeeFirstName, e.EmployeeLastName;
+
+-- Eliminação de colunas desnecessárias da tabela de colaboradores
+ALTER TABLE Employees
+DROP COLUMN Column1, 
+DROP COLUMN Column2;
